@@ -20,8 +20,8 @@ def get_gemini_response(medicine_name):
         return "Please enter the name of your medicine and relevant information only."
 
 # Initialize Streamlit app
-st.set_page_config(page_title="MedExplainer", layout="centered")
-st.title("MedExplainer 💊")
+st.set_page_config(page_title="MedExplainer: Your GenAI-Powered Medicine Companion", layout="centered")
+st.title("MedExplainer: Your GenAI-Powered Medicine Companion 💊")
 
 # App description
 st.markdown("""

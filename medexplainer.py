@@ -41,7 +41,7 @@ submit = st.button("Get Explanation")
 
 # When submit is clicked
 if submit:
-    explanation = get_gemini_response(medicine_input, language=language)
+    explanation = get_gemini_response(medicine_input)
     st.subheader("Medicine Explanation and Treatment Plan Summary:")
     st.write(explanation)
 

@@ -13,6 +13,7 @@ def get_gemini_response(medicine_name):
         For the medicine: {medicine_name}, briefly explain what it is used for in simple terms that a non-medical person can understand.
         Additionally, provide a summary explaining the likely reason this medicine has been prescribed as part of a treatment plan.
         The goal is to educate the user about their medicine treatment plan without using complex medical terminology.
+        Provide the response in {language}
         """
         response = model.generate_content(question)
         return response.text
@@ -33,8 +34,8 @@ Enter the name of your medicine below, and click **Get Explanation**.
 # Input box for medicine name
 medicine_input = st.text_input("Enter the name of your medicine:", placeholder="e.g., Metformin")
 
-# Language selection
-language = st.selectbox("Select Language:", available_languages)
+# Input box for preferred language
+language_input = st.text_input("Enter your preferred language (default is English):", value="English")
 
 submit = st.button("Get Explanation")
 

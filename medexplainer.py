@@ -33,11 +33,14 @@ Enter the name of your medicine below, and click **Get Explanation**.
 # Input box for medicine name
 medicine_input = st.text_input("Enter the name of your medicine:", placeholder="e.g., Metformin")
 
+# Language selection
+language = st.selectbox("Select Language:", available_languages)
+
 submit = st.button("Get Explanation")
 
 # When submit is clicked
 if submit:
-    explanation = get_gemini_response(medicine_input)
+    explanation = get_gemini_response(medicine_input, language=language)
     st.subheader("Medicine Explanation and Treatment Plan Summary:")
     st.write(explanation)
 

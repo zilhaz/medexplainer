@@ -7,12 +7,37 @@ genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 # Function to get responses from the Gemini Pro model
 model = genai.GenerativeModel("gemini-1.5-flash")
 
-def get_gemini_response(medicine_name):
+# List of supported languages
+supported_languages = {
+    "English": "en",
+    "中文 (Mandarin Chinese)": "zh",
+    "हिन्दी (Hindi)": "hi",
+    "Español (Spanish)": "es",
+    "Français (French)": "fr",
+    "العربية (Arabic)": "ar",
+    "বাংলা (Bengali)": "bn",
+    "Русский (Russian)": "ru",
+    "Português (Portuguese)": "pt",
+    "Bahasa Indonesia (Indonesian)": "id",
+    "Deutsch (German)": "de",
+    "日本語 (Japanese)": "ja",
+    "मराठी (Marathi)": "mr",
+    "Türkçe (Turkish)": "tr",
+    "Italiano (Italian)": "it",
+    "Polski (Polish)": "pl",
+    "ਪੰਜਾਬੀ (Punjabi)": "pa",
+    "한국어 (Korean)": "ko",
+    "தமிழ் (Tamil)": "ta",
+    "ગુજરાતી (Gujarati)": "gu"
+}
+
+def get_gemini_response(medicine_name, language_code):
     if medicine_name:
         question = f"""
         For the medicine: {medicine_name}, briefly explain what it is used for in simple terms that a non-medical person can understand.
         Additionally, provide a summary explaining the likely reason this medicine has been prescribed as part of a treatment plan.
         The goal is to educate the user about their medicine treatment plan without using complex medical terminology.
+        Please provide the response in {language_code}.
         """
         response = model.generate_content(question)
         return response.text
@@ -33,12 +58,16 @@ Enter the name of your medicine below, and click **Get Explanation**.
 # Input box for medicine name
 medicine_input = st.text_input("Enter the name of your medicine:", placeholder="e.g., Metformin")
 
+# Dropdown for language selection
+selected_language = st.selectbox("Select your preferred language (default is English):", list(supported_languages.keys()), index=0)
+
 submit = st.button("Get Explanation")
 
 # When submit is clicked
 if submit:
-    explanation = get_gemini_response(medicine_input)
-    st.subheader("Medicine Explanation and Treatment Plan Summary:")
+    language_code = supported_languages[selected_language]
+    explanation = get_gemini_response(medicine_input, language_code)
+    st.subheader(f"Medicine Explanation and Treatment Plan Summary ({selected_language}):")
     st.write(explanation)
 
 # Add disclaimer
